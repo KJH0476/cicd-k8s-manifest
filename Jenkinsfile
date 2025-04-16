@@ -9,6 +9,9 @@ pipeline {
     stages {
         stage('깃허브 Pull') {
             steps {
+                echo "${params.baseDir}"
+                echo "${params.tag}"
+                echo "${params.dockerRepo}"
                 git branch: 'main',
                 credentialsId: 'GitHub-Access',
                 url: 'https://github.com/KJH0476/cicd-k8s-manifest.git'
