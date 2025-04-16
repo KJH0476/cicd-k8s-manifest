@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'baseDir', defaultValue: '.', description: 'Base directory')
+        string(name: 'tag', defaultValue: 'latest', description: 'Image tag')
+        string(name: 'dockerRepo', defaultValue: 'dockerRepo', description: 'Docker repository')
+    }
 
     stages {
         stage('깃허브 Pull') {
@@ -12,19 +17,22 @@ pipeline {
         stage('이미지 태그 변경') {
             steps {
                 sh """
-                    cd ${baseDir}
-                    sed -i "s/^\\(\\s*tag:\\s*\\).*$/\\1${tag}/" values.yaml
+                    cd ${params.baseDir}
+                    sed -i "s/^\\(\\s*tag:\\s*\\).*$/\\1${params.tag}/" values.yaml
                 """
             }
         }
         stage('Helm 차트 수정 후 배포') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'GitHub-Access', passwordVariable: 'gitPassword', usernameVariable: 'gitUsername'), string(credentialsId: 'github_email', variable: 'gitEmail')]) {
+                withCredentials([
+                    usernamePassword(credentialsId: 'GitHub-Access', passwordVariable: 'gitPassword', usernameVariable: 'gitUsername'),
+                    string(credentialsId: 'github_email', variable: 'gitEmail')
+                ]) {
                     sh """
-                        git config user.email $gitEmail
-                        git config user.name $gitUsername
+                        git config user.email ${gitEmail}
+                        git config user.name ${gitUsername}
                         git add -A
-                        git commit -m '[jenkins] update image tag = $dockerRepo:$tag'
+                        git commit -m '[jenkins] update image tag = ${params.dockerRepo}:${params.tag}'
                         git push https://github.com/${gitUsername}/cicd-k8s-manifest.git
                     """
                 }
