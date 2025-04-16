@@ -12,7 +12,7 @@ pipeline {
         stage('이미지 태그 변경') {
             steps {
                 sh """
-                    cd $baseDirectory
+                    cd $baseDir
                     sed -i "s/^\(\s*tag:\s*\).*$/\1$tag/" values.yaml
                 """
             }
