@@ -36,8 +36,8 @@ pipeline {
                         git config user.email ${gitEmail}
                         git config user.name ${gitUsername}
                         git add -A
-                        git commit -m '[jenkins] update image tag = ${params.dockerRepo}:${params.tag}'
-                        git push https://github.com/${gitUsername}/cicd-k8s-manifest.git
+                        git commit -m '[Jenkins] update image tag = ${params.dockerRepo}:${params.tag}'
+                        git push https://${gitUsername}:${gitPassword}@github.com/KJH0476/cicd-k8s-manifest.git
                     """
                 }
             }
