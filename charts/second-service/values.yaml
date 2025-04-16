@@ -1,4 +1,4 @@
-mamespace: prod
+namespace: prod
 
 app:
   name: second-service
