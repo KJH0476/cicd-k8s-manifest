@@ -1,0 +1,7 @@
+apiVersion: v2
+name: third-service-chart
+description: A Helm chart for Third Service
+type: application
+kubeVersion: ">=1.27.0"
+version: "1.0.0"
+appVersion: "image_tag"

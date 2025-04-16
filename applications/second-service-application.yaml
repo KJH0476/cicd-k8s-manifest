@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: second-service
+spec:
+  destination:
+    namespace: prod
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://github.com/KJH0476/cicd-k8s-manifest.git'
+    targetRevision: main
+    path: charts/second-service
+    helm:
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    automated: {}
