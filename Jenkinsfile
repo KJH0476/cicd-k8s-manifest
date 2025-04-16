@@ -22,6 +22,7 @@ pipeline {
                 sh """
                     cd ${params.baseDir}
                     sed -i "s/^\\(\\s*tag:\\s*\\).*[\\\$]/\\1${params.tag}/" values.yaml
+                    cat values.yaml
                 """
             }
         }
