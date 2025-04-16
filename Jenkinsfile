@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh """
                     cd $baseDir
-                    sed -i "s/^\(\s*tag:\s*\).*$/\1$tag/" values.yaml
+                    sed -i "s/^\\(\\s*tag:\\s*\\).*$/\\1${tag}/" values.yaml
                 """
             }
         }
